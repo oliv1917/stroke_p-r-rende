@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pårørendehjælp – Genoptræning efter blodprop</title>
+  <style>
+    /* ===== CSS-variabler (inspiration fra emento.dk: roligt, professionelt, grønlige accenter) ===== */
+    :root{
+      --bg: #ffffff;
+      --text: #1f2937;      /* mørk grå */
+      --muted: #6b7280;     /* sekundær tekst */
+      --brand: #1c8c7a;     /* grønt accent */
+      --brand-2: #0ea5a3;   /* lysere grøn/teal */
+      --brand-3: #cff5ef;   /* meget lys baggrund/accent */
+      --surface: #f7f9fb;   /* kort-baggrund */
+      --border: #e5e7eb;
+      --radius: 16px;
+      --shadow: 0 8px 24px rgba(0,0,0,.06);
+      --shadow-soft: 0 2px 8px rgba(0,0,0,.05);
+    }
+
+    *{ box-sizing: border-box; }
+    html{ scroll-behavior: smooth; }
+    body{
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    /* ===== Topbar / Navigation ===== */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    .container{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .nav{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .brand{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+    .logo{
+      width: 36px; height: 36px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--brand-2), var(--brand));
+      box-shadow: var(--shadow-soft);
+    }
+    .nav ul{
+      display: flex; gap: 16px; list-style: none; margin: 0; padding: 0;
+    }
+    .nav a{
+      text-decoration: none; color: var(--text); font-weight: 600; padding: 10px 12px; border-radius: 10px;
+    }
+    .nav a:hover{ background: var(--surface); }
+    .cta{
+      background: linear-gradient(135deg, var(--brand-2), var(--brand));
+      color: #fff !important;
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* ===== Hero (Forside) ===== */
+    .hero{
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #f8fbfb, #ffffff);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-inner{
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 40px;
+      align-items: center;
+      padding: 64px 0;
+    }
+    .eyebrow{ color: var(--brand); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 12px; }
+    h1{ font-size: clamp(28px, 4vw, 44px); line-height: 1.15; margin: 10px 0 16px; }
+    .lead{ color: var(--muted); font-size: clamp(16px, 2.2vw, 19px); margin-bottom: 22px; }
+    .hero-actions{ display: flex; flex-wrap: wrap; gap: 12px; }
+    .button{
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border);
+      text-decoration: none; color: var(--text); font-weight: 600;
+      background: #fff;
+    }
+    .button:hover{ background: var(--surface); }
+    .button.primary{ background: linear-gradient(135deg, var(--brand-2), var(--brand)); color:#fff; border-color: transparent; box-shadow: var(--shadow); }
+    .illus{
+      width: 100%; aspect-ratio: 4/3; border-radius: var(--radius); background: linear-gradient(135deg, var(--brand-3), #ffffff);
+      display: grid; place-items: center; box-shadow: var(--shadow);
+    }
+    .illus img{ 
+      display: block; 
+      max-width: 100%; 
+      height: auto; 
+      border-radius: var(--radius); 
+      box-shadow: var(--shadow); 
+    }
+    .illus svg{ width: 70%; height: auto; }
+
+    /* ===== Kort oversigt ===== */
+    .cards{
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; margin: 28px 0 8px;
+    }
+    .card{
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 18px; box-shadow: var(--shadow-soft);
+      transition: transform .15s ease, box-shadow .15s ease;
+      text-decoration: none; color: inherit;
+    }
+    .card:hover{ transform: translateY(-2px); box-shadow: var(--shadow); }
+    .card h3{ margin: 8px 0 6px; font-size: 18px; }
+    .card p{ margin: 0; color: var(--muted); font-size: 14px; }
+
+    /* ===== Sektioner (undersider i én fil) ===== */
+    section{ padding: 64px 0; }
+    section .section-head{ margin-bottom: 18px; }
+    section h2{ font-size: clamp(24px,3vw,32px); margin: 0 0 8px; }
+    .prose{ max-width: 800px; }
+    .prose p{ margin: 0 0 12px; }
+    .prose ul{ margin: 0 0 12px 18px; }
+
+    /* ===== Footer ===== */
+    footer{ border-top: 1px solid var(--border); background: #fbfcfd; }
+    .foot{
+      display: grid; gap: 10px; padding: 22px 0; color: var(--muted); font-size: 14px;
+    }
+
+    /* ===== Responsiv ===== */
+    @media (max-width: 960px){
+      .hero-inner{ grid-template-columns: 1fr; padding: 40px 0; }
+      .cards{ grid-template-columns: repeat(2,1fr); }
+      .nav ul{ display: none; } /* gør det simpelt på mobil */
+    }
+    @media (max-width: 560px){
+      .cards{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== Navigation ===== -->
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#forside" aria-label="Gå til forside">
+        <span class="logo" aria-hidden="true"></span>
+        <span>Pårørendehjælp</span>
+      </a>
+      <ul>
+        <li><a href="#hjemmet">Genoptræning i hjemmet</a></li>
+        <li><a href="#stoette">Hvordan kan du støtte?</a></li>
+        <li><a href="#elementer">Vigtige elementer</a></li>
+        <li><a href="#ressourcer" class="cta">Ressourcer</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ===== Forside / Hero ===== -->
+  <main id="forside" class="hero">
+    <div class="container hero-inner">
+      <div>
+        <div class="eyebrow">Genoptræning efter blodprop</div>
+        <h1>Hjælp den ramte godt videre – hjemme, trygt og trin for trin</h1>
+        <p class="lead">
+          En enkel guide til pårørende med konkrete råd, anbefalede træningselementer og links til troværdige kilder.
+        </p>
+      </div>
+      <div class="illus">
+        <img src="https://images.unsplash.com/photo-1582719478173-2f3df3a273d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Illustration af støtte og genoptræning i hjemmet"/>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== Underside: Genoptræning i hjemmet ===== -->
+  <section id="hjemmet">
+    <div class="container">
+      <div class="section-head">
+        <h2>Genoptræning i hjemmet</h2>
+        <p class="prose">
+          Når en person kommer hjem efter en blodprop i hjernen, fortsætter genoptræningen. Det er vigtigt, at øvelser og træning bliver en del af hverdagen.
+        </p>
+      </div>
+      <div class="prose">
+        <ul>
+          <li>Skab faste rutiner – fx daglige træningstidspunkter.</li>
+          <li>Gør hjemmet trygt: fjern løse tæpper, sørg for gode lysforhold.</li>
+          <li>Brug hjælpemidler, som fysioterapeut eller ergoterapeut har anbefalet.</li>
+        </ul>
+        <p>Kilde: <a href="https://www.sundhed.dk/" target="_blank" rel="noopener">Sundhed.dk</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Underside: Hvordan kan du støtte? ===== -->
+  <section id="stoette" style="background: var(--surface);">
+    <div class="container">
+      <div class="section-head">
+        <h2>Hvordan kan du støtte?</h2>
+        <p class="prose">Vær tålmodig, hjælp med struktur og pas på energien – fremgang sker ofte i små skridt.</p>
+      </div>
+      <div class="prose">
+        <ul>
+          <li>Motivér og anerkend indsatsen fremfor kun resultaterne.</li>
+          <li>Hjælp med at strukturere dagen og minde om øvelserne.</li>
+          <li>Lyt til den ramtes behov og vær opmærksom på træthed og humørsvingninger.</li>
+          <li>Sørg for pauser og balance mellem træning og hvile.</li>
+        </ul>
+        <p>Kilde: <a href="https://www.hjernesagen.dk/" target="_blank" rel="noopener">Hjernesagen</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Underside: Vigtige genoptræningselementer ===== -->
+  <section id="elementer">
+    <div class="container">
+      <div class="section-head">
+        <h2>Vigtige genoptræningselementer</h2>
+        <p class="prose">Efter en blodprop er der typisk behov for træning på flere områder:</p>
+      </div>
+      <div class="prose">
+        <ul>
+          <li><strong>Fysisk træning:</strong> bevægelighed, balance og styrke.</li>
+          <li><strong>Ergoterapi (ADL):</strong> daglige aktiviteter som at spise, klæde sig på og bruge køkkenet.</li>
+          <li><strong>Tale/sprog:</strong> øvelser med logopæd og simple kommunikationshjælpemidler.</li>
+          <li><strong>Kognitivt:</strong> hukommelse, koncentration og problemløsning.</li>
+          <li><strong>Psykisk støtte:</strong> håndtering af angst, tristhed eller ændret personlighed.</li>
+        </ul>
+        <p>Kilde: <a href="https://www.sundhed.dk/borger/patienthaandbogen/hjerte-og-blodkar/sygdomme/apopleksi/apopleksi-rehabilitering/" target="_blank" rel="noopener">Sundhed.dk – Genoptræning</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Underside: Nyttige ressourcer ===== -->
+  <section id="ressourcer" style="background: linear-gradient(0deg, #f7fbfb, #ffffff);">
+    <div class="container">
+      <div class="section-head">
+        <h2>Nyttige ressourcer</h2>
+        <p class="prose">Troværdige kilder og hjælp til pårørende:</p>
+      </div>
+      <div class="prose">
+        <ul>
+          <li><a href="https://www.hjernesagen.dk/" target="_blank" rel="noopener">Hjernesagen</a> – information, rådgivning og netværk.</li>
+          <li><a href="https://www.sundhed.dk/" target="_blank" rel="noopener">Sundhed.dk</a> – patientinformation og vejledninger.</li>
+          <li><a href="https://www.patienthjaelp.dk/" target="_blank" rel="noopener">Patienthjaelp.dk</a> – hjælp og støtte til pårørende.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <div class="container foot">
+      <div>Udarbejdet som statisk informationsside til pårørende – med inspiration fra moderne sundhedsdesign.</div>
+      <div>Bygget på indhold fra <a href="https://www.hjernesagen.dk/" target="_blank" rel="noopener">Hjernesagen</a> og <a href="https://www.sundhed.dk/" target="_blank" rel="noopener">Sundhed.dk</a>.</div>
+    </div>
+  </footer>
+</body>
+</html>
