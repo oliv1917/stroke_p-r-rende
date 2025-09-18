@@ -3,157 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://images.unsplash.com; style-src 'self'; font-src 'self'; base-uri 'self'; form-action 'self'" />
   <title>Pårørendehjælp – Genoptræning efter blodprop</title>
-  <style>
-    /* ===== CSS-variabler (inspiration fra emento.dk: roligt, professionelt, grønlige accenter) ===== */
-    :root{
-      --bg: #ffffff;
-      --text: #1f2937;      /* mørk grå */
-      --muted: #6b7280;     /* sekundær tekst */
-      --brand: #1c8c7a;     /* grønt accent */
-      --brand-2: #0ea5a3;   /* lysere grøn/teal */
-      --brand-3: #cff5ef;   /* meget lys baggrund/accent */
-      --surface: #f7f9fb;   /* kort-baggrund */
-      --border: #e5e7eb;
-      --radius: 16px;
-      --shadow: 0 8px 24px rgba(0,0,0,.06);
-      --shadow-soft: 0 2px 8px rgba(0,0,0,.05);
-    }
-
-    *{ box-sizing: border-box; }
-    html{ scroll-behavior: smooth; }
-    body{
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.6;
-    }
-
-    /* ===== Topbar / Navigation ===== */
-    .topbar{
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(255,255,255,.85);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
-    }
-    .container{
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    .nav{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-    }
-    .brand{
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 700;
-      letter-spacing: .2px;
-    }
-    .logo{
-      width: 36px; height: 36px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, var(--brand-2), var(--brand));
-      box-shadow: var(--shadow-soft);
-    }
-    .nav ul{
-      display: flex; gap: 16px; list-style: none; margin: 0; padding: 0;
-    }
-    .nav a{
-      text-decoration: none; color: var(--text); font-weight: 600; padding: 10px 12px; border-radius: 10px;
-    }
-    .nav a:hover{ background: var(--surface); }
-    .cta{
-      background: linear-gradient(135deg, var(--brand-2), var(--brand));
-      color: #fff !important;
-      box-shadow: var(--shadow-soft);
-    }
-
-    /* ===== Hero (Forside) ===== */
-    .hero{
-      position: relative;
-      overflow: hidden;
-      background: linear-gradient(180deg, #f8fbfb, #ffffff);
-      border-bottom: 1px solid var(--border);
-    }
-    .hero-inner{
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 40px;
-      align-items: center;
-      padding: 64px 0;
-    }
-    .eyebrow{ color: var(--brand); font-weight: 700; text-transform: uppercase; letter-spacing: .1em; font-size: 12px; }
-    h1{ font-size: clamp(28px, 4vw, 44px); line-height: 1.15; margin: 10px 0 16px; }
-    .lead{ color: var(--muted); font-size: clamp(16px, 2.2vw, 19px); margin-bottom: 22px; }
-    .hero-actions{ display: flex; flex-wrap: wrap; gap: 12px; }
-    .button{
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 16px; border-radius: 12px; border: 1px solid var(--border);
-      text-decoration: none; color: var(--text); font-weight: 600;
-      background: #fff;
-    }
-    .button:hover{ background: var(--surface); }
-    .button.primary{ background: linear-gradient(135deg, var(--brand-2), var(--brand)); color:#fff; border-color: transparent; box-shadow: var(--shadow); }
-    .illus{
-      width: 100%; aspect-ratio: 4/3; border-radius: var(--radius); background: linear-gradient(135deg, var(--brand-3), #ffffff);
-      display: grid; place-items: center; box-shadow: var(--shadow);
-    }
-    .illus img{ 
-      display: block; 
-      max-width: 100%; 
-      height: auto; 
-      border-radius: var(--radius); 
-      box-shadow: var(--shadow); 
-    }
-    .illus svg{ width: 70%; height: auto; }
-
-    /* ===== Kort oversigt ===== */
-    .cards{
-      display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; margin: 28px 0 8px;
-    }
-    .card{
-      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 18px; box-shadow: var(--shadow-soft);
-      transition: transform .15s ease, box-shadow .15s ease;
-      text-decoration: none; color: inherit;
-    }
-    .card:hover{ transform: translateY(-2px); box-shadow: var(--shadow); }
-    .card h3{ margin: 8px 0 6px; font-size: 18px; }
-    .card p{ margin: 0; color: var(--muted); font-size: 14px; }
-
-    /* ===== Sektioner (undersider i én fil) ===== */
-    section{ padding: 64px 0; }
-    section .section-head{ margin-bottom: 18px; }
-    section h2{ font-size: clamp(24px,3vw,32px); margin: 0 0 8px; }
-    .prose{ max-width: 800px; }
-    .prose p{ margin: 0 0 12px; }
-    .prose ul{ margin: 0 0 12px 18px; }
-
-    /* ===== Footer ===== */
-    footer{ border-top: 1px solid var(--border); background: #fbfcfd; }
-    .foot{
-      display: grid; gap: 10px; padding: 22px 0; color: var(--muted); font-size: 14px;
-    }
-
-    /* ===== Responsiv ===== */
-    @media (max-width: 960px){
-      .hero-inner{ grid-template-columns: 1fr; padding: 40px 0; }
-      .cards{ grid-template-columns: repeat(2,1fr); }
-      .nav ul{ display: none; } /* gør det simpelt på mobil */
-    }
-    @media (max-width: 560px){
-      .cards{ grid-template-columns: 1fr; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <!-- ===== Navigation ===== -->
@@ -209,7 +61,7 @@
   </section>
 
   <!-- ===== Underside: Hvordan kan du støtte? ===== -->
-  <section id="stoette" style="background: var(--surface);">
+  <section id="stoette" class="section-alt">
     <div class="container">
       <div class="section-head">
         <h2>Hvordan kan du støtte?</h2>
@@ -248,7 +100,7 @@
   </section>
 
   <!-- ===== Underside: Nyttige ressourcer ===== -->
-  <section id="ressourcer" style="background: linear-gradient(0deg, #f7fbfb, #ffffff);">
+  <section id="ressourcer" class="section-gradient">
     <div class="container">
       <div class="section-head">
         <h2>Nyttige ressourcer</h2>
